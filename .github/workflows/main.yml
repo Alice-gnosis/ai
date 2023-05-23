@@ -1,6 +1,10 @@
 name: Run Python Script
 
 on:
+  schedule:
+    # This line runs the workflow at 00:00 UTC every Sunday
+    - cron: "0 0 * * 0"
+
   push:
     branches:
       - main
