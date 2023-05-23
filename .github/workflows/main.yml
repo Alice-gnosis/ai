@@ -32,14 +32,3 @@ jobs:
         run: python main.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-
-      - name: Add changes to Git
-        run: git add .
-
-      - name: Commit changes
-        run: git commit -m "Update data.json"
-
-      - name: Push changes
-        run: git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GIT_PAT }}
