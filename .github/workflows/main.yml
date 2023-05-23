@@ -25,7 +25,7 @@ jobs:
 
       - name: Set Git identity
         run: |
-          git config --global user.email "ngmisl@posteo.net"
+          git config --global user.email "ngmi@posteo.net"
           git config --global user.name "chris"
 
       - name: Run Python script
