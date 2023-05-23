@@ -2,13 +2,13 @@ import json
 import re
 import subprocess
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 import openai
 
 from typing import List, Dict, Any
 
-load_dotenv()
+# load_dotenv()
 
 # OpenAI API key
 openai_api_key = os.getenv("OPENAI_API_KEY")
