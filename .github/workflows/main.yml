@@ -32,7 +32,12 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
-      - name: Run Python script
-        run: python main.py
+      - name: Retry Step
+        uses: nick-fields/retry@v2.8.3
+        id: retry
+        with:
+          timeout_seconds: 15
+          max_attempts: 3
+          command: python main.py
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
