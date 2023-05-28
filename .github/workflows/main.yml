@@ -36,7 +36,7 @@ jobs:
         uses: nick-fields/retry@v2.8.3
         id: retry
         with:
-          timeout_seconds: 15
+          timeout_seconds: 120
           max_attempts: 3
           command: python main.py
         env:
