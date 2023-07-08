@@ -14,8 +14,7 @@ from typing import List, Dict, Any
 openai_api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = openai_api_key
 
-
-def get_new_thoughts() -> List[Dict[str, str]]:
+def call_openai_api() -> Any:
     messages = [
         {
             "role": "system",
@@ -34,12 +33,15 @@ def get_new_thoughts() -> List[Dict[str, str]]:
         stop=None,
         temperature=0.7,
     )
+    return response
+
+def get_new_thoughts() -> List[Dict[str, str]]:
+    response = call_openai_api()
     responses: List[str] = response.choices[0].message["content"].split("\n")[:10]
     formatted_responses: List[Dict[str, str]] = [
         {"response": re.sub(r"^\d+\.\s*", "", resp).strip()} for resp in responses
     ]
     return formatted_responses
-
 
 # Get new thoughts
 new_data = get_new_thoughts()
