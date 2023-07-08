@@ -15,7 +15,9 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = openai_api_key
 
 
+# Function to generate responses representing thoughts of a girl under societal pressure
 def get_new_thoughts() -> List[Dict[str, str]]:
+    # Define the messages to be sent to the OpenAI API
     messages = [
         {
             "role": "system",
@@ -26,6 +28,7 @@ def get_new_thoughts() -> List[Dict[str, str]]:
             "content": "Please generate the responses. Make sure there is no empty response.",  # noqa: E501
         },
     ]
+    # Send the messages to the OpenAI API and get the response
     response: Any = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=messages,
@@ -34,25 +37,27 @@ def get_new_thoughts() -> List[Dict[str, str]]:
         stop=None,
         temperature=0.7,
     )
+    # Extract the responses from the API response
     responses: List[str] = response.choices[0].message["content"].split("\n")[:10]
+    # Format the responses
     formatted_responses: List[Dict[str, str]] = [
         {"response": re.sub(r"^\d+\.\s*", "", resp).strip()} for resp in responses
     ]
+    # Return the formatted responses
     return formatted_responses
 
-
-# Get new thoughts
+# Get the new thoughts by calling the function
 new_data = get_new_thoughts()
 
-# Write the new data to output.json (overwriting existing data)
+# Write the new thoughts to output.json (overwriting existing data)
 with open("output.json", "w") as f:
     json.dump(new_data, f, indent=4)
 
-# Add all changes to Git
+# Add the changes to Git
 subprocess.run(["git", "add", "output.json"])
 
-# Commit changes with a message
+# Commit the changes with a message
 subprocess.run(["git", "commit", "-m", "Update output.json"])
 
-# Push changes to GitHub
+# Push the changes to GitHub
 subprocess.run(["git", "push"])
